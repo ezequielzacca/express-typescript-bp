@@ -14,7 +14,7 @@ import { Laborable } from './../utils/laborables.util';
 
 const laborableUtil = new Laborable();
 export class AgendasRouter {
-  router: Router
+  public router: Router
 
   /**
    * Initialize the AgendasRouter

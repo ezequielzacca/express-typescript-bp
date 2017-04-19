@@ -4,7 +4,7 @@ import { ObjectID } from "mongodb";
 import * as _ from "underscore";
 
 export class ObraSocialRouter {
-  router: Router
+  public router: Router
 
   /**
    * Initialize the ObrasSocialesRouter

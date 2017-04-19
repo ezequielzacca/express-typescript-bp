@@ -6,7 +6,7 @@ import {ObjectID} from "mongodb";
 import * as _ from "underscore";
 
 export class EspecialidadRouter {
-  router: Router
+  public router: Router
 
   /**
    * Initialize the EspecialidadesRouter
