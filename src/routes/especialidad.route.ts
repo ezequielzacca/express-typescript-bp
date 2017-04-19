@@ -1,15 +1,15 @@
-import { MEDICOS_COLLECTION } from './../constants/collections.constants';
-import { IMedico } from './../interfaces/medico.interfaces';
+import { IEspecialidad } from './../interfaces/especialidad.interfaces';
+import { ESPECIALIDADES_COLLECTION } from './../constants/collections.constants';
 import {Router, Request, Response, NextFunction} from 'express';
 import * as database from "../database/database";
 import {ObjectID} from "mongodb";
 import * as _ from "underscore";
 
-export class MedicosRouter {
+export class EspecialidadRouter {
   router: Router
 
   /**
-   * Initialize the MedicosRouter
+   * Initialize the EspecialidadesRouter
    */
   constructor() {
     this.router = Router();
@@ -17,41 +17,42 @@ export class MedicosRouter {
   }
 
   /**
-   * GET all Medicos.
+   * GET all Especialidades.
    */
   public getAll(req: Request, res: Response, next: NextFunction) {
-    database.getDB().collection(MEDICOS_COLLECTION).find({}).toArray((err,medicos:Array<IMedico>)=>{
+    database.getDB().collection(ESPECIALIDADES_COLLECTION).find({}).toArray((err,especialidades:Array<IEspecialidad>)=>{
       if(err)
         throw err;
-      res.json(medicos);
+      res.json(especialidades);
     });  
     
   }
 
   /**
-   * GET all Medicos.
+   * ADD new Especialidad.
    */
   public createOne(req: Request, res: Response, next: NextFunction) {
   let auditoriaInfo = {fechaAlta:new Date(),fechaModificacion:null};
-  let entity:IMedico = Object.assign({},_.omit(req.body,'_id'),auditoriaInfo);
-    database.getDB().collection(MEDICOS_COLLECTION).insert(entity,(err,result)=>{
+  let entity:IEspecialidad = Object.assign({},_.omit(req.body,'_id'),auditoriaInfo);
+    database.getDB().collection(ESPECIALIDADES_COLLECTION).insert(entity,(err,result)=>{
         if(err){
             throw err;
         }
-        res.send(<IMedico>result.ops[0]);
+        res.send(<IEspecialidad>result.ops[0]);
     });  
     
   }
 
    /**
-   * GET all Medicos.
+   * GET single Especialidad.
    */
   public getOne(req: Request, res: Response, next: NextFunction) {
     console.log(req.params.id);
-    database.getDB().collection(MEDICOS_COLLECTION).findOne({_id:ObjectID.createFromHexString(req.params.id)},(err,medico:IMedico)=>{
+    database.getDB().collection(ESPECIALIDADES_COLLECTION)
+      .findOne({_id:ObjectID.createFromHexString(req.params.id)},(err,especialidad:IEspecialidad)=>{
       if(err)
         throw err;
-      res.json(medico);
+      res.json(especialidad);
     });  
     
   }
@@ -59,17 +60,18 @@ export class MedicosRouter {
   
 
   /**
-   * UPDATE single Medico.
+   * UPDATE single Especialidad.
    */
   public updateOne(req: Request, res: Response, next: NextFunction) {
     //when updating we need to remove the id property of the object in order to make it inmutable
     let auditoriaInfo = {fechaModificacion:new Date()};
-    let entity:IMedico = Object.assign({},_.omit(req.body,'_id'),auditoriaInfo);
-    database.getDB().collection(MEDICOS_COLLECTION).findOneAndUpdate({_id:ObjectID.createFromHexString(req.params.id)},{$set:entity},(err,result)=>{
+    let entity:IEspecialidad = Object.assign({},_.omit(req.body,'_id'),auditoriaInfo);
+    database.getDB().collection(ESPECIALIDADES_COLLECTION)
+      .findOneAndUpdate({_id:ObjectID.createFromHexString(req.params.id)},{$set:entity},(err,result)=>{
         if(err){
             throw err;
         }
-        res.send(<IMedico>result.value);
+        res.send(<IEspecialidad>result.value);
     });  
     
   }
@@ -90,7 +92,7 @@ export class MedicosRouter {
 }
 
 // Create the HeroRouter, and export its configured Express.Router
-const medicosRouter = new MedicosRouter();
-medicosRouter.init();
+const especialidadRouter = new EspecialidadRouter();
+especialidadRouter.init();
 
-export default medicosRouter.router;
+export default especialidadRouter.router;

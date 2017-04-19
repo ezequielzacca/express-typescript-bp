@@ -1,15 +1,13 @@
-import { MEDICOS_COLLECTION } from './../constants/collections.constants';
-import { IMedico } from './../interfaces/medico.interfaces';
 import {Router, Request, Response, NextFunction} from 'express';
 import * as database from "../database/database";
 import {ObjectID} from "mongodb";
 import * as _ from "underscore";
 
-export class MedicosRouter {
+export class PacientesRouter {
   router: Router
 
   /**
-   * Initialize the MedicosRouter
+   * Initialize the PacientesRouter
    */
   constructor() {
     this.router = Router();
@@ -17,41 +15,41 @@ export class MedicosRouter {
   }
 
   /**
-   * GET all Medicos.
+   * GET all Pacientes.
    */
   public getAll(req: Request, res: Response, next: NextFunction) {
-    database.getDB().collection(MEDICOS_COLLECTION).find({}).toArray((err,medicos:Array<IMedico>)=>{
+    database.getDB().collection('pacientes').find({}).toArray((err,pacientes)=>{
       if(err)
         throw err;
-      res.json(medicos);
+      res.json(pacientes);
     });  
     
   }
 
   /**
-   * GET all Medicos.
+   * GET all Pacientes.
    */
   public createOne(req: Request, res: Response, next: NextFunction) {
   let auditoriaInfo = {fechaAlta:new Date(),fechaModificacion:null};
-  let entity:IMedico = Object.assign({},_.omit(req.body,'_id'),auditoriaInfo);
-    database.getDB().collection(MEDICOS_COLLECTION).insert(entity,(err,result)=>{
+  let entity = Object.assign({},_.omit(req.body,'_id'),auditoriaInfo);
+    database.getDB().collection('pacientes').insert(entity,(err,result)=>{
         if(err){
             throw err;
         }
-        res.send(<IMedico>result.ops[0]);
+        res.send(result.ops[0]);
     });  
     
   }
 
    /**
-   * GET all Medicos.
+   * GET single Paciente.
    */
   public getOne(req: Request, res: Response, next: NextFunction) {
     console.log(req.params.id);
-    database.getDB().collection(MEDICOS_COLLECTION).findOne({_id:ObjectID.createFromHexString(req.params.id)},(err,medico:IMedico)=>{
+    database.getDB().collection('pacientes').findOne({_id:ObjectID.createFromHexString(req.params.id)},(err,especialidad)=>{
       if(err)
         throw err;
-      res.json(medico);
+      res.json(especialidad);
     });  
     
   }
@@ -59,17 +57,17 @@ export class MedicosRouter {
   
 
   /**
-   * UPDATE single Medico.
+   * UPDATE single Paciente.
    */
   public updateOne(req: Request, res: Response, next: NextFunction) {
     //when updating we need to remove the id property of the object in order to make it inmutable
     let auditoriaInfo = {fechaModificacion:new Date()};
-    let entity:IMedico = Object.assign({},_.omit(req.body,'_id'),auditoriaInfo);
-    database.getDB().collection(MEDICOS_COLLECTION).findOneAndUpdate({_id:ObjectID.createFromHexString(req.params.id)},{$set:entity},(err,result)=>{
+    let entity = Object.assign({},_.omit(req.body,'_id'),auditoriaInfo);
+    database.getDB().collection('pacientes').findOneAndUpdate({_id:ObjectID.createFromHexString(req.params.id)},{$set:entity},(err,result)=>{
         if(err){
             throw err;
         }
-        res.send(<IMedico>result.value);
+        res.send(result.value);
     });  
     
   }
@@ -90,7 +88,7 @@ export class MedicosRouter {
 }
 
 // Create the HeroRouter, and export its configured Express.Router
-const medicosRouter = new MedicosRouter();
-medicosRouter.init();
+const pacientesRouter = new PacientesRouter();
+pacientesRouter.init();
 
-export default medicosRouter.router;
+export default pacientesRouter.router;

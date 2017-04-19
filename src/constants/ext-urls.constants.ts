@@ -1,0 +1,1 @@
+export const NO_LABORABLES_WS = "http://nolaborables.com.ar/api/v2/feriados/";

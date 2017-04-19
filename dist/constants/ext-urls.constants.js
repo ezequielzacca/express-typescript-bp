@@ -1,0 +1,5 @@
+"use strict";
+Object.defineProperty(exports, "__esModule", { value: true });
+exports.NO_LABORABLES_WS = "http://nolaborables.com.ar/api/v2/feriados/";
+
+//# sourceMappingURL=data:application/json;charset=utf8;base64,eyJ2ZXJzaW9uIjozLCJzb3VyY2VzIjpbIi4uL3NyYy9jb25zdGFudHMvZXh0LXVybHMuY29uc3RhbnRzLnRzIl0sIm5hbWVzIjpbXSwibWFwcGluZ3MiOiI7O0FBQWEsUUFBQSxnQkFBZ0IsR0FBRyw2Q0FBNkMsQ0FBQyIsImZpbGUiOiJjb25zdGFudHMvZXh0LXVybHMuY29uc3RhbnRzLmpzIiwic291cmNlc0NvbnRlbnQiOlsiZXhwb3J0IGNvbnN0IE5PX0xBQk9SQUJMRVNfV1MgPSBcImh0dHA6Ly9ub2xhYm9yYWJsZXMuY29tLmFyL2FwaS92Mi9mZXJpYWRvcy9cIjsiXSwic291cmNlUm9vdCI6Ii4uIn0=

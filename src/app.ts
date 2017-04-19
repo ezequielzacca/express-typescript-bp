@@ -1,10 +1,12 @@
 
+
 import * as path from 'path';
 import * as express from 'express';
 import * as logger from 'morgan';
 import * as bodyParser from 'body-parser';
 import * as cors from 'cors';
-
+import * as moment from 'moment';
+moment.locale('es');
 //Database related stuff
 import * as database from  "./database/database";
 
@@ -12,6 +14,11 @@ import * as database from  "./database/database";
 
 //Routers
 import MedicosRouter from "./routes/medicos.route";
+import EspecialidadRouter from "./routes/especialidad.route";
+import ObraSocialRouter from './routes/obrasocial.route';
+import PacienteRouter from './routes/paciente.route';
+import AgendasRouter from './routes/agenda.route';
+
 
 
 // Creates and configures an ExpressJS web server.
@@ -50,16 +57,21 @@ class App {
          * API endpoints */
         let router = express.Router();
         // placeholder route handler
-        router.get('/', (req, res, next) => {
+        
+        //this.express.use('/', router);
+        this.express.use('/api/v1/medicos', MedicosRouter);
+        this.express.use('/api/v1/especialidades', EspecialidadRouter);
+        this.express.use('/api/v1/obras/sociales', ObraSocialRouter);
+        this.express.use('/api/v1/pacientes', PacienteRouter);
+        this.express.use('/api/v1/agendas', AgendasRouter);
+        /*router.get('/', (req, res, next) => {
             
             res.json({
                 message: 'Hello World!',
                 array:[12,13,{hola:"mundo v3"}]
             });
-        });
+        });*/
         //Aca yo pondria todas las rutas de mi app
-        this.express.use('/', router);
-        this.express.use('/api/v1/medicos', MedicosRouter);
     }
 
 }

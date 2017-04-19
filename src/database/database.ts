@@ -18,6 +18,6 @@ let _db;
     } );
   };
 
-  export function getDB() {
+  export function getDB():mongodb.Db {
     return _db;
   }
